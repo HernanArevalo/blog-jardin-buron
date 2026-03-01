@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const tag = getTagBySlug(slug)
   if (!tag) return { title: "No encontrado" }
   return {
-    title: `${tag.name} | Jardin - Instituto Padre Juan Buron`,
+    title: `${tag.name} | Jardin - Instituto Padre Juan Burón`,
     description: `Publicaciones para ${tag.name}`,
   }
 }

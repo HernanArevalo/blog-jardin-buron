@@ -15,8 +15,8 @@ export function SiteFooter() {
       </div>
 
       {/* Background decoration */}
-      <div className="absolute bottom-0 right-0 w-72 h-72 rounded-full bg-primary/3 blur-3xl -z-0" aria-hidden="true" />
-      <div className="absolute bottom-10 left-10 w-40 h-40 rounded-full bg-accent/5 blur-3xl -z-0" aria-hidden="true" />
+      <div className="absolute bottom-0 right-0 w-72 h-72 rounded-full bg-primary/3 blur-3xl z-0" aria-hidden="true" />
+      <div className="absolute bottom-10 left-10 w-40 h-40 rounded-full bg-accent/5 blur-3xl z-0" aria-hidden="true" />
 
       <div className="relative z-10 mx-auto max-w-6xl px-4 py-12 lg:px-6">
         <div className="flex flex-col md:flex-row gap-10 md:gap-16">
@@ -31,7 +31,7 @@ export function SiteFooter() {
                   Jardin de Infantes
                 </span>
                 <span className="text-xs text-muted-foreground">
-                  Instituto Padre Juan Buron
+                  Instituto Padre Juan Burón
                 </span>
               </div>
             </div>
@@ -87,8 +87,8 @@ export function SiteFooter() {
               <li className="flex items-start gap-2.5">
                 <MapPin className="h-4 w-4 text-primary/60 mt-0.5 shrink-0" />
                 <div>
-                  <p className="font-medium text-foreground">Instituto Padre Juan Buron</p>
-                  <p>Buenos Aires, Argentina</p>
+                  <p className="font-medium text-foreground">Instituto Padre Juan Burón</p>
+                  <p>Córdoba, Argentina</p>
                 </div>
               </li>
               <li className="flex items-center gap-2.5">
@@ -102,7 +102,7 @@ export function SiteFooter() {
         {/* Bottom bar */}
         <div className="mt-10 pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-muted-foreground">
-            {new Date().getFullYear()} Instituto Padre Juan Buron - Jardin de Infantes.
+            {new Date().getFullYear()} Instituto Padre Juan Burón - Jardin de Infantes.
           </p>
           <p className="text-xs text-muted-foreground flex items-center gap-1">
             Hecho con <Heart className="h-3 w-3 text-destructive fill-destructive inline" /> para nuestras familias

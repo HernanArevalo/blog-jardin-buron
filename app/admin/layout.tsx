@@ -2,7 +2,7 @@ import Link from "next/link"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Panel de Administracion | Instituto Padre Juan Buron",
+  title: "Panel de Administracion | Instituto Padre Juan Burón",
   description: "Gestiona publicaciones y contenido del blog del Jardin.",
   robots: "noindex, nofollow",
 }
@@ -26,7 +26,7 @@ export default function AdminLayout({
                 Panel Admin
               </span>
               <span className="text-xs text-muted-foreground leading-tight">
-                Instituto Padre Juan Buron
+                Instituto Padre Juan Burón
               </span>
             </div>
           </div>

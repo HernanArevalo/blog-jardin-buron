@@ -30,13 +30,13 @@ export function HeroBanner() {
             Bienvenidos al blog del{" "}
             <span className="relative inline-block">
               <span className="relative z-10 text-primary">Jardin</span>
-              <span className="absolute bottom-1 left-0 right-0 h-3 bg-accent/30 rounded-sm -z-0" />
+              <span className="absolute bottom-1 left-0 right-0 h-3 bg-accent/30 rounded-sm z-0" />
             </span>
           </h1>
 
           <p className="mt-5 text-muted-foreground text-base md:text-lg max-w-xl leading-relaxed animate-fade-in-up animation-delay-200">
             Novedades, actividades y comunicados para las familias del{" "}
-            <span className="font-semibold text-foreground">Instituto Padre Juan Buron</span>.
+            <span className="font-semibold text-foreground">Instituto Padre Juan Burón</span>.
             Mantenete al dia con todo lo que pasa en nuestro jardin.
           </p>
 
@@ -62,7 +62,7 @@ export function HeroBanner() {
         </div>
 
         {/* Right: Salas grid cards */}
-        <div className="flex-shrink-0 w-full lg:w-[340px] animate-fade-in-up animation-delay-300">
+        <div className="shrink-0 w-full lg:w-85 animate-fade-in-up animation-delay-300">
           <div className="grid grid-cols-2 gap-3">
             {salas.map((sala, i) => (
               <Link

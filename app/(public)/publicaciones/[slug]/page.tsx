@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const post = getPostBySlug(slug)
   if (!post) return { title: "No encontrado" }
   return {
-    title: `${post.title} | Jardin - Instituto Padre Juan Buron`,
+    title: `${post.title} | Jardin - Instituto Padre Juan Burón`,
     description: post.excerpt,
   }
 }
