@@ -35,14 +35,7 @@ export const tags: Tag[] = [
     slug: "sala-4-b",
     color: "#9B6DD7",
     createdAt: "2026-01-01T00:00:00Z",
-  },
-  {
-    id: "6",
-    name: "Sala de 3",
-    slug: "sala-3",
-    color: "#E8B630",
-    createdAt: "2026-01-01T00:00:00Z",
-  },
+  }
 ]
 
 export const posts: Post[] = [
@@ -154,11 +147,11 @@ Pronto les compartiremos fotos del progreso!`,
   },
   {
     id: "5",
-    title: "Cumpleanos del mes: Febrero",
-    slug: "cumpleanos-febrero",
+    title: "Cumpleaños del mes: Febrero",
+    slug: "cumpleaños-febrero",
     excerpt:
-      "Festejamos los cumpleanos de febrero con una hermosa merienda compartida.",
-    content: `Este mes celebramos los cumpleanos de:
+      "Festejamos los cumpleaños de febrero con una hermosa merienda compartida.",
+    content: `Este mes celebramos los cumpleaños de:
 - Martina (Sala de 5 A)
 - Tomas (Sala de 4 B)
 - Valentina (Sala de 3)
