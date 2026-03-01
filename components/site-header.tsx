@@ -6,6 +6,7 @@ import { useState, useEffect } from "react"
 import { Menu, X, ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { getSalas } from "@/lib/data"
+import Image from "next/image"
 
 export function SiteHeader() {
   const pathname = usePathname()
@@ -40,8 +41,9 @@ export function SiteHeader() {
 
       <div className="mx-auto max-w-6xl flex items-center justify-between px-4 py-3 lg:px-6">
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="relative flex h-11 w-11 items-center justify-center rounded-2xl bg-primary text-primary-foreground font-serif text-xl font-bold transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 shadow-md shadow-primary/20">
-            <span>J</span>
+          <div className="relative flex h-11 w-11 items-center justify-center rounded-2xl bg-accent/40 text-primary-foreground font-serif text-xl font-bold transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 shadow-md shadow-primary/20">
+            {/* <span>J</span> */}
+            <Image src={'/logo.png'} alt="logo" width={24} height={24}></Image>
             <div className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full bg-accent border-2 border-card animate-pulse-soft" />
           </div>
           <div className="flex flex-col">
@@ -49,7 +51,7 @@ export function SiteHeader() {
               Jardin de Infantes
             </span>
             <span className="text-[11px] text-muted-foreground leading-tight">
-              Instituto Padre Juan Buron
+              Instituto Padre Juan Burón
             </span>
           </div>
         </Link>
