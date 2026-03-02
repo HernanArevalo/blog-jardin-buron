@@ -10,7 +10,7 @@ import { getFirestore } from 'firebase/firestore/lite'
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDerTvq8CLDwol0OdqUrFsq_XdM4o4L73o",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
   authDomain: "app-jardin-buron.firebaseapp.com",
   projectId: "app-jardin-buron",
   storageBucket: "app-jardin-buron.firebasestorage.app",
@@ -23,6 +23,6 @@ const firebaseConfig = {
 const FirebaseApp = initializeApp(firebaseConfig);
 const analytics = getAnalytics(FirebaseApp);
 
-export const FirebaseAuth = getAuth( FirebaseApp );
-export const FirebaseDB   = getFirestore( FirebaseApp );
+export const FirebaseAuth = getAuth(FirebaseApp);
+export const FirebaseDB = getFirestore(FirebaseApp);
 
