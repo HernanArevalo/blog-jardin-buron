@@ -1,8 +1,9 @@
-import { getPublishedPosts, getFeaturedPosts, getAllTags } from "@/lib/data"
+import { getAllTags } from "@/lib/data"
 import { PostCard } from "@/components/post-card"
 import { TagFilter } from "@/components/tag-filter"
 import { FeaturedSection } from "@/components/featured-section"
 import { HeroBanner } from "@/components/hero-banner"
+import { getFeaturedPosts, getPublishedPosts } from "@/actions/posts"
 
 export default async function HomePage({
   searchParams,
@@ -10,8 +11,8 @@ export default async function HomePage({
   searchParams: Promise<{ tag?: string }>
 }) {
   const { tag: activeTag } = await searchParams
-  const allPosts = getPublishedPosts()
-  const featuredPosts = getFeaturedPosts()
+  const allPosts = await getPublishedPosts()
+  const featuredPosts = await getFeaturedPosts()
   const tags = getAllTags()
 
   const filteredPosts = activeTag

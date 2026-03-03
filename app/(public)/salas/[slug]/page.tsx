@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { ArrowLeft, Users } from "lucide-react"
-import { getTagBySlug, getPostsByTag, getSalas } from "@/lib/data"
+import { getTagBySlug, getSalas } from "@/lib/data"
 import { PostCard } from "@/components/post-card"
 import type { Metadata } from "next"
+import { getPostsByTag } from "@/actions/posts"
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -29,7 +30,7 @@ export default async function SalaPage({ params }: PageProps) {
   const tag = getTagBySlug(slug)
   if (!tag) notFound()
 
-  const posts = getPostsByTag(tag.id)
+  const posts = await getPostsByTag(tag.id)
   const allSalas = getSalas()
 
   return (
