@@ -1,3 +1,5 @@
+import { Timestamp, FieldValue } from "firebase/firestore/lite"
+
 export interface Tag {
   id: string
   name: string
@@ -18,6 +20,29 @@ export interface Post {
   backgroundColor?: string
   featured: boolean
   status: "draft" | "published"
-  createdAt: string
-  updatedAt: string
+  createdAt: Timestamp
+  updatedAt: Timestamp
+}
+
+export interface CreatePostInput {
+  title: string
+  slug: string
+  excerpt: string
+  content: string
+  mainImage?: string
+  galleryImages: string[]
+  tags: string[]
+  backgroundColor?: string
+  featured: boolean
+  status: "draft" | "published"
+  createdAt?: FieldValue
+  updatedAt?: FieldValue
+  publishedAt?: FieldValue
+}
+
+export interface User {
+  id: string
+  name: string
+  email: string
+  password: string
 }
