@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const post = getPostBySlug(slug)
   if (!post) return { title: "No encontrado" }
   return {
-    title: `${post.title} | Jardin - Instituto Padre Juan Burón`,
+    title: `${post.title} | Jardín - Instituto Padre Juan Burón`,
     description: post.excerpt,
   }
 }
@@ -76,8 +76,8 @@ export default async function PostPage({ params }: PageProps) {
       <div className="flex items-center gap-4 mt-5 mb-8 animate-fade-in-up animation-delay-300">
         <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
           <Calendar className="h-4 w-4 text-primary/60" />
-          <time dateTime={post.createdAt}>
-            {format(new Date(post.createdAt), "EEEE d 'de' MMMM, yyyy", {
+          <time dateTime={post.createdAt.toString()}>
+            {format(new Date(post.createdAt.toString()), "EEEE d 'de' MMMM, yyyy", {
               locale: es,
             })}
           </time>

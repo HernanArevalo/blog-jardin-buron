@@ -48,7 +48,7 @@ export function SiteHeader() {
           </div>
           <div className="flex flex-col">
             <span className="font-serif text-lg leading-tight text-foreground group-hover:text-primary transition-colors">
-              Jardin de Infantes
+              Jardín de Infantes
             </span>
             <span className="text-[11px] text-muted-foreground leading-tight">
               Instituto Padre Juan Burón

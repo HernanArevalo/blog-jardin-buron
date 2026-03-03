@@ -28,7 +28,7 @@ export function SiteFooter() {
               </div>
               <div className="flex flex-col">
                 <span className="font-serif text-xl text-foreground">
-                  Jardin de Infantes
+                  Jardín de Infantes
                 </span>
                 <span className="text-xs text-muted-foreground">
                   Instituto Padre Juan Burón
@@ -36,7 +36,7 @@ export function SiteFooter() {
               </div>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-sm mt-4">
-              Nuestro espacio de comunicacion para las familias del jardin.
+              Nuestro espacio de comunicacion para las familias del jardín.
               Compartimos novedades, actividades y momentos especiales de cada dia.
             </p>
             {/* Mini color palette */}
@@ -101,9 +101,14 @@ export function SiteFooter() {
 
         {/* Bottom bar */}
         <div className="mt-10 pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-muted-foreground">
-            {new Date().getFullYear()} Instituto Padre Juan Burón - Jardin de Infantes.
-          </p>
+          <div className="text-xs text-muted-foreground">
+            <p>
+              {new Date().getFullYear()} Instituto Padre Juan Burón - Jardín de Infantes.
+            </p>
+            <Link href="/admin">
+              <p className="underline text-sm">Ingresar</p>
+            </Link>
+          </div>
           <p className="text-xs text-muted-foreground flex items-center gap-1">
             Hecho con <Heart className="h-3 w-3 text-destructive fill-destructive inline" /> para nuestras familias
           </p>

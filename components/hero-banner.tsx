@@ -29,7 +29,7 @@ export function HeroBanner() {
           <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground text-balance leading-[1.15]">
             Bienvenidos al blog del{" "}
             <span className="relative inline-block">
-              <span className="relative z-10 text-primary">Jardin</span>
+              <span className="relative z-10 text-primary">Jardín</span>
               <span className="absolute bottom-1 left-0 right-0 h-3 bg-accent/30 rounded-sm z-0" />
             </span>
           </h1>
@@ -37,7 +37,7 @@ export function HeroBanner() {
           <p className="mt-5 text-muted-foreground text-base md:text-lg max-w-xl leading-relaxed animate-fade-in-up animation-delay-200">
             Novedades, actividades y comunicados para las familias del{" "}
             <span className="font-semibold text-foreground">Instituto Padre Juan Burón</span>.
-            Mantenete al dia con todo lo que pasa en nuestro jardin.
+            Mantenete al dia con todo lo que pasa en nuestro jardín.
           </p>
 
           {/* Quick stats */}

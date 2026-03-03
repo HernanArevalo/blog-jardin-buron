@@ -44,7 +44,7 @@ export const posts: Post[] = [
     title: "Bienvenidos al ciclo lectivo 2026",
     slug: "bienvenidos-ciclo-2026",
     excerpt:
-      "Estamos felices de comenzar un nuevo ano lleno de aprendizaje y aventuras juntos.",
+      "Estamos felices de comenzar un nuevo año lleno de aprendizaje y aventuras juntos.",
     content: `Queridas familias,
 
 Es un placer darles la bienvenida a un nuevo ciclo lectivo. Este ano nos esperan muchas actividades, proyectos y momentos especiales que compartiremos con ustedes a traves de este espacio.
@@ -53,7 +53,7 @@ Recuerden que este blog sera nuestro canal principal de comunicacion para compar
 
 Los esperamos con mucha alegria.
 
-El equipo del Jardin`,
+El equipo del Jardín`,
     mainImage:
       "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&h=500&fit=crop",
     galleryImages: [],
