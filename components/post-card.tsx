@@ -34,7 +34,7 @@ export function PostCard({ post, featured = false }: PostCardProps) {
               loading="lazy"
             />
             {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute inset-0 bg-linear-to-t from-foreground/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
             {/* Colored top strip per tag */}
             {mainTag && (
@@ -62,10 +62,10 @@ export function PostCard({ post, featured = false }: PostCardProps) {
           <div className="flex items-center gap-2 mb-2.5">
             <Calendar className="h-3.5 w-3.5 text-primary/60" />
             <time
-              dateTime={post.createdAt}
+              dateTime={post.createdAt.toDate().toISOString()}
               className="text-xs text-muted-foreground"
             >
-              {format(new Date(post.createdAt), "d 'de' MMMM, yyyy", {
+              {format(new Date(post.createdAt.toDate()), "d 'de' MMMM, yyyy", {
                 locale: es,
               })}
             </time>

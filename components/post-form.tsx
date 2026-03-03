@@ -234,7 +234,7 @@ export function PostForm({ postId }: PostFormProps) {
                 {galleryImages.map((img, i) => (
                   <div
                     key={i}
-                    className="relative aspect-[4/3] rounded-lg overflow-hidden group"
+                    className="relative aspect-4/3 rounded-lg overflow-hidden group"
                   >
                     <Image
                       src={img}
