@@ -20,9 +20,17 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const FirebaseApp = initializeApp(firebaseConfig);
-const analytics = getAnalytics(FirebaseApp);
+const FirebaseApp = initializeApp(firebaseConfig)
 
-export const FirebaseAuth = getAuth(FirebaseApp);
-export const FirebaseDB = getFirestore(FirebaseApp);
+export const FirebaseAuth = getAuth(FirebaseApp)
+export const FirebaseDB = getFirestore(FirebaseApp)
 
+let analytics
+
+if (typeof window !== "undefined") {
+  isSupported().then((yes) => {
+    if (yes) {
+      analytics = getAnalytics(FirebaseApp)
+    }
+  })
+}
