@@ -1,3 +1,4 @@
+import { serverTimestamp, Timestamp } from "firebase/firestore/lite"
 import type { Tag, Post } from "./types"
 
 export const tags: Tag[] = [
@@ -60,8 +61,8 @@ El equipo del Jardín`,
     tags: ["1"],
     featured: true,
     status: "published",
-    createdAt: "2026-02-25T10:00:00Z",
-    updatedAt: "2026-02-25T10:00:00Z",
+    createdAt: Timestamp.now(),
+    updatedAt: Timestamp.now(),
   },
   {
     id: "2",
@@ -73,7 +74,7 @@ El equipo del Jardín`,
 
 El objetivo es que cada nino pueda expresar su creatividad y desarrollar habilidades motoras finas a traves del arte.
 
-Las obras terminadas seran expuestas en el hall del jardin a fin de mes.
+Las obras terminadas seran expuestas en el hall del jardín a fin de mes.
 
 Materiales que necesitamos:
 - Pinceles de distintos tamanos
@@ -89,8 +90,8 @@ Materiales que necesitamos:
     backgroundColor: "#FFF5EC",
     featured: true,
     status: "published",
-    createdAt: "2026-02-24T14:00:00Z",
-    updatedAt: "2026-02-24T14:00:00Z",
+    createdAt: Timestamp.now(),
+    updatedAt: Timestamp.now(),
   },
   {
     id: "3",
@@ -121,15 +122,15 @@ Los esperamos!`,
     tags: ["1"],
     featured: false,
     status: "published",
-    createdAt: "2026-02-23T09:00:00Z",
-    updatedAt: "2026-02-23T09:00:00Z",
+    createdAt: Timestamp.now(),
+    updatedAt: Timestamp.now()
   },
   {
     id: "4",
     title: "Sala de 4 A: Proyecto de Huerta",
     slug: "sala-4a-proyecto-huerta",
     excerpt:
-      "Los chicos de Sala de 4 A comenzaron a preparar la huerta del jardin.",
+      "Los chicos de Sala de 4 A comenzaron a preparar la huerta del jardín.",
     content: `Con mucho entusiasmo, los ninos de Sala de 4 A comenzaron el proyecto de huerta. Plantaron semillas de lechuga, tomate cherry y albahaca.
 
 Cada dia los chicos se turnan para regar las plantas y observar su crecimiento. Estamos trabajando conceptos de ciencias naturales, responsabilidad y trabajo en equipo.
@@ -142,8 +143,8 @@ Pronto les compartiremos fotos del progreso!`,
     backgroundColor: "#EEFAF4",
     featured: false,
     status: "published",
-    createdAt: "2026-02-22T11:00:00Z",
-    updatedAt: "2026-02-22T11:00:00Z",
+    createdAt: Timestamp.now(),
+    updatedAt: Timestamp.now(),
   },
   {
     id: "5",
@@ -164,43 +165,17 @@ Fue una tarde muy divertida con juegos, musica y una merienda compartida. Feliz 
     tags: ["1"],
     featured: false,
     status: "published",
-    createdAt: "2026-02-20T16:00:00Z",
-    updatedAt: "2026-02-20T16:00:00Z",
-  },
-  {
-    id: "6",
-    title: "Sala de 3: Adaptacion y Juegos",
-    slug: "sala-3-adaptacion",
-    excerpt:
-      "Los mas pequenos del jardin estan transitando su periodo de adaptacion con mucho amor.",
-    content: `Las primeras semanas en el jardin son un momento muy importante para los mas chiquitos. El equipo de Sala de 3 esta acompanando a cada nino en su proceso de adaptacion con mucho carino y paciencia.
-
-Las actividades incluyen:
-- Juegos libres en el patio
-- Canciones y rondas
-- Exploracion de materiales sensoriales
-- Cuentos interactivos
-
-Pedimos a las familias que acompanen este proceso con tranquilidad y confianza. Cualquier duda, no duden en consultarnos.`,
-    mainImage:
-      "https://images.unsplash.com/photo-1587654780291-39c9404d7dd0?w=800&h=500&fit=crop",
-    galleryImages: [],
-    tags: ["6"],
-    featured: false,
-    status: "published",
-    createdAt: "2026-02-18T10:00:00Z",
-    updatedAt: "2026-02-18T10:00:00Z",
-  },
+    createdAt: Timestamp.now(),
+    updatedAt: Timestamp.now(),
+  }
 ]
 
 // Helper functions
+
+// * posts
 export function getPublishedPosts(): Post[] {
   return posts
     .filter((p) => p.status === "published")
-    .sort(
-      (a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    )
 }
 
 export function getFeaturedPosts(): Post[] {
@@ -221,6 +196,7 @@ export function getPostBySlug(slug: string): Post | undefined {
   return posts.find((p) => p.slug === slug)
 }
 
+// * tags
 export function getTagById(id: string): Tag | undefined {
   return tags.find((t) => t.id === id)
 }
