@@ -2,7 +2,7 @@ import {
   collection,
   getDocs,
   query,
-} from "firebase/firestore/lite"
+} from "firebase/firestore"
 import { FirebaseDB } from "@/config/firebase"
 import { Tag } from "@/lib/types"
 

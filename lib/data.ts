@@ -1,4 +1,4 @@
-import { serverTimestamp, Timestamp } from "firebase/firestore/lite"
+import { serverTimestamp, Timestamp } from "firebase/firestore"
 import type { Tag, Post } from "./types"
 
 export const tags: Tag[] = [

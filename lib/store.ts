@@ -1,3 +1,4 @@
+import { Timestamp } from "firebase/firestore"
 import { posts as initialPosts, tags as initialTags } from "./data"
 import type { Post, Tag } from "./types"
 
@@ -28,8 +29,8 @@ export function createPost(data: Omit<Post, "id" | "createdAt" | "updatedAt">): 
   const post: Post = {
     ...data,
     id: String(Date.now()),
-    createdAt: now,
-    updatedAt: now,
+    createdAt: Timestamp.now(),
+    updatedAt: Timestamp.now(),
   }
   postsStore.push(post)
   return post

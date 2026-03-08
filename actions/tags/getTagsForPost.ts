@@ -4,7 +4,7 @@ import {
   query,
   where,
   documentId,
-} from "firebase/firestore/lite"
+} from "firebase/firestore"
 import { FirebaseDB } from "@/config/firebase"
 import { Post, Tag } from "@/lib/types"
 

@@ -4,7 +4,7 @@ import {
   query,
   where,
   orderBy,
-} from "firebase/firestore/lite"
+} from "firebase/firestore"
 import { FirebaseDB } from "@/config/firebase"
 import { Post } from "@/lib/types"
 
