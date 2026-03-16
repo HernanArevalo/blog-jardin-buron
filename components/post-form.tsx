@@ -88,7 +88,7 @@ useEffect(() => {
       mainImage: mainImage || undefined,
       galleryImages,
       tags: selectedTags,
-      backgroundColor: backgroundColor || undefined,
+      backgroundColor: backgroundColor || "#FFFFFF",
       featured,
       status: submitStatus
     }

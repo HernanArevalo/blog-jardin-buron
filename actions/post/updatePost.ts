@@ -1,55 +1,75 @@
-import {
-  collection,
-  getDocs,
-  query,
-  orderBy,
-  where,
+ import {
+
+   doc,
+  getDoc,
+   serverTimestamp,
   updateDoc,
-  doc,
-  serverTimestamp,
-  Timestamp
-} from "firebase/firestore"
-import { FirebaseDB } from "@/config/firebase"
-import { Post } from "@/lib/types"
+ } from "firebase/firestore"
+import { revalidatePath } from "next/cache"
+ import { FirebaseDB } from "@/config/firebase"
+ import { Post } from "@/lib/types"
+import { deleteFilesByUrls } from "@/utils/firebaseStorage"
+ 
+ export async function UpdatePostById(
+   id: string,
+   data: Partial<Omit<Post, "id" | "createdAt">>
+ ) {
+   try {
 
-export async function UpdatePostById(
-  id: string,
-  data: Partial<Omit<Post, "id" | "createdAt">>
-) {
+    const docRef = doc(FirebaseDB, "posts", id)
+    const previousSnapshot = await getDoc(docRef)
 
-  try {
-    const docRef = doc(FirebaseDB, 'posts', id);
-  
-    const postUpdatedData: Partial<Omit<Post, "id" | "createdAt">> = {
-      ...data,
-      updatedAt: serverTimestamp() as Timestamp
-    };
-  
-  
-    await updateDoc(docRef, postUpdatedData);
-  
-    if (!doc) {
+    if (!previousSnapshot.exists()) {
       return null
     }
-  
-        return {
-            message: "Post created successfully",
-            data: {
-                id: docRef.id,
-                ...data,
-            },
-            ok: true,
-            error: null,
-            status: 201,
-        }
- } catch (error) {
-    console.error("Error updating post:", error)
+
+    const previousPost = previousSnapshot.data() as Post
+
+     const postUpdatedData: Partial<Omit<Post, "id" | "createdAt">> = {
+       ...data,
+      updatedAt: serverTimestamp() as Post["updatedAt"],
+    }
+
+    await updateDoc(docRef, postUpdatedData)
+
+    const removedGalleryImages = (previousPost.galleryImages || []).filter(
+      (oldUrl) => !(data.galleryImages || previousPost.galleryImages || []).includes(oldUrl)
+    )
+
+    const mainImageWasReplaced =
+      Boolean(previousPost.mainImage) &&
+      typeof data.mainImage === "string" &&
+      data.mainImage !== previousPost.mainImage
+
+    await deleteFilesByUrls([
+      ...(mainImageWasReplaced && previousPost.mainImage ? [previousPost.mainImage] : []),
+      ...removedGalleryImages,
+    ])
+
+    revalidatePath("/admin")
+    revalidatePath("/")
+    revalidatePath("/publicaciones")
 
     return {
-      message: "Error al actualizar el post",
-      data: null,
-      error: error instanceof Error ? error.message : String(error),
-      status: 500
-    }
-  }
+      message: "Post actualizado correctamente",
+      data: {
+        ...previousPost,
+        ...data,
+        id: docRef.id,
+      },
+      ok: true,
+      error: null,
+      status: 200,
+     }
+  } catch (error) {
+     console.error("Error updating post:", error)
+ 
+     return {
+       message: "Error al actualizar el post",
+       data: null,
+       error: error instanceof Error ? error.message : String(error),
+      ok: false,
+      status: 500,
+     }
+   }
 }
