@@ -7,7 +7,7 @@ import {
 import { FirebaseDB } from "@/config/firebase"
 import { Post } from "@/lib/types"
 
-export async function getPosts(): Promise<Post[]> {
+export async function getAllPosts(): Promise<Post[]> {
   const postsCollection = collection(FirebaseDB, "posts")
 
   const q = query(
