@@ -1,34 +1,26 @@
 import { NextResponse } from "next/server"
-import { getAllPosts, createPost } from "@/lib/store"
+import { getAllPosts } from "@/actions/posts"
+import { createPost } from "@/actions/post/createPost"
+import { CreatePostInput } from "@/lib/types"
+import { generateSlug } from "@/utils/generateSlug"
 
 export async function GET() {
-  const posts = getAllPosts()
+  const posts = await getAllPosts()
+
   return NextResponse.json(posts)
 }
 
 export async function POST(request: Request) {
   const body = await request.json()
 
-  const slug =
-    body.slug ||
-    body.title
-      .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, "")
-      .replace(/\s+/g, "-")
-      .slice(0, 60)
+  const slug = body.slug || generateSlug(body.title)
 
-  const post = createPost({
-    title: body.title,
-    slug,
-    excerpt: body.excerpt,
-    content: body.content,
-    mainImage: body.mainImage || undefined,
-    galleryImages: body.galleryImages || [],
+  const post = await createPost({
+    ...body,
     tags: body.tags || [],
-    backgroundColor: body.backgroundColor || undefined,
     featured: body.featured || false,
     status: body.status || "draft",
-  })
+  } as CreatePostInput)
 
   return NextResponse.json(post, { status: 201 })
 }

@@ -4,10 +4,11 @@ import Link from "next/link"
 import { ArrowLeft, Calendar, Star, Share2 } from "lucide-react"
 import { format } from "date-fns"
 import { es } from "date-fns/locale"
-import { getPostBySlug, getTagsForPost, getPublishedPosts } from "@/lib/data"
+import { getTagsForPost, getPublishedPosts } from "@/lib/data"
 import { TagBadge } from "@/components/tag-badge"
 import { PostGallery } from "@/components/post-gallery"
 import type { Metadata } from "next"
+import { getPostBySlug } from "@/actions/post"
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -15,8 +16,16 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
-  const post = getPostBySlug(slug)
-  if (!post) return { title: "No encontrado" }
+
+  const { data: post } = await getPostBySlug(slug)
+
+  if (!post) {
+    return {
+      title: "Post no encontrado",
+      description: "La publicación no existe"
+    }
+  }
+
   return {
     title: `${post.title} | Jardín - Instituto Padre Juan Burón`,
     description: post.excerpt,
@@ -24,14 +33,21 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export async function generateStaticParams() {
-  const posts = getPublishedPosts()
-  return posts.map((p) => ({ slug: p.slug }))
+  const posts = await getPublishedPosts()
+
+  return posts.map((p) => ({
+    slug: p.slug
+  }))
 }
 
 export default async function PostPage({ params }: PageProps) {
   const { slug } = await params
-  const post = getPostBySlug(slug)
-  if (!post || post.status !== "published") notFound()
+
+  const { data: post } = await getPostBySlug(slug)
+
+  if (!post || post.status !== "published") {
+    notFound()
+  }
 
   const postTags = getTagsForPost(post)
   const mainTag = postTags[0]
@@ -77,7 +93,7 @@ export default async function PostPage({ params }: PageProps) {
         <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
           <Calendar className="h-4 w-4 text-primary/60" />
           <time dateTime={post.createdAt.toString()}>
-            {format(new Date(post.createdAt.toString()), "EEEE d 'de' MMMM, yyyy", {
+            {format(new Date(post.createdAt.toDate()), "EEEE d 'de' MMMM, yyyy", {
               locale: es,
             })}
           </time>

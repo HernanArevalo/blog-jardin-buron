@@ -8,6 +8,7 @@ import { es } from "date-fns/locale"
 import { toast } from "sonner"
 import type { Post, Tag } from "@/lib/types"
 import { Button } from "@/components/ui/button"
+import { parseFirestoreDate } from "@/utils/parseFirestoreDate"
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json())
 
@@ -26,9 +27,23 @@ export default function AdminPage() {
   async function handleDelete(id: string) {
     if (!confirm("Estas seguro de que quieres eliminar esta publicacion?"))
       return
-    await fetch(`/api/posts/${id}`, { method: "DELETE" })
-    mutate()
-    toast.success("Publicacion eliminada")
+
+    mutate(
+      (posts) => posts?.filter((post) => post.id !== id),
+      false
+    )
+
+    try {
+      const res = await fetch(`/api/posts/${id}`, { method: "DELETE" })
+
+      if (!res.ok) throw new Error()
+
+      toast.success("Publicacion eliminada")
+    } catch {
+      toast.error("Error eliminando la publicacion")
+    } finally {
+      mutate()
+    }
   }
 
   async function toggleFeatured(post: Post) {
@@ -119,10 +134,15 @@ export default function AdminPage() {
                 </div>
                 <div className="flex flex-wrap items-center gap-1.5">
                   <time className="text-xs text-muted-foreground">
-                    {format(new Date(post.createdAt), "d MMM yyyy", {
+                    {format(new Date(parseFirestoreDate(post.createdAt)), "d MMM yyyy", {
                       locale: es,
                     })}
                   </time>
+                  {/* <time className="text-xs text-muted-foreground">
+                    {format(new Date(post.createdAt.toDate()), "d MMM yyyy", {
+                      locale: es,
+                    })}
+                  </time> */}
                   {post.tags.map((tagId) => (
                     <span
                       key={tagId}
@@ -163,9 +183,8 @@ export default function AdminPage() {
                   }
                 >
                   <Star
-                    className={`h-4 w-4 ${
-                      post.featured ? "text-accent fill-current" : ""
-                    }`}
+                    className={`h-4 w-4 ${post.featured ? "text-accent fill-current" : ""
+                      }`}
                   />
                 </button>
                 <Link

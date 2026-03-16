@@ -14,9 +14,13 @@ import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { Checkbox } from "@/components/ui/checkbox"
 import type { Post, Tag } from "@/lib/types"
+import { validatePost, validatePostResult } from "@/lib/validators/validatePost"
 
-const fetcher = (url: string) => fetch(url).then((r) => r.json())
-
+const fetcher = async (url: string) => {
+  const res = await fetch(url)
+  const json = await res.json()
+  return json.data
+}
 interface PostFormProps {
   postId?: string
 }
@@ -28,6 +32,7 @@ export function PostForm({ postId }: PostFormProps) {
     postId ? `/api/posts/${postId}` : null,
     fetcher
   )
+
 
   const [saving, setSaving] = useState(false)
   const [title, setTitle] = useState("")
@@ -41,19 +46,19 @@ export function PostForm({ postId }: PostFormProps) {
   const [featured, setFeatured] = useState(false)
   const [status, setStatus] = useState<"draft" | "published">("draft")
 
-  useEffect(() => {
-    if (existingPost) {
-      setTitle(existingPost.title)
-      setExcerpt(existingPost.excerpt)
-      setContent(existingPost.content)
-      setMainImage(existingPost.mainImage || "")
-      setGalleryImages(existingPost.galleryImages)
-      setSelectedTags(existingPost.tags)
-      setBackgroundColor(existingPost.backgroundColor || "")
-      setFeatured(existingPost.featured)
-      setStatus(existingPost.status)
-    }
-  }, [existingPost])
+useEffect(() => {
+  if (existingPost) {
+    setTitle(existingPost.title || "")
+    setExcerpt(existingPost.excerpt || "")
+    setContent(existingPost.content || "")
+    setMainImage(existingPost.mainImage || "")
+    setGalleryImages(existingPost.galleryImages || [])
+    setSelectedTags(existingPost.tags || [])
+    setBackgroundColor(existingPost.backgroundColor || "")
+    setFeatured(existingPost.featured ?? false)
+    setStatus(existingPost.status || "draft")
+  }
+}, [existingPost])
 
   function toggleTag(tagId: string) {
     setSelectedTags((prev) =>
@@ -73,48 +78,62 @@ export function PostForm({ postId }: PostFormProps) {
   }
 
   async function handleSubmit(submitStatus: "draft" | "published") {
-    if (!title.trim()) {
-      toast.error("El titulo es obligatorio")
-      return
+
+    if (saving) return
+
+    const body = {
+      title,
+      excerpt,
+      content,
+      mainImage: mainImage || undefined,
+      galleryImages,
+      tags: selectedTags,
+      backgroundColor: backgroundColor || undefined,
+      featured,
+      status: submitStatus
     }
-    if (selectedTags.length === 0) {
-      toast.error("Selecciona al menos un tag")
+
+    const validation: validatePostResult = validatePost(body)
+
+    if (!validation.valid) {
+      validation.errors.forEach(err => toast.error(err))
       return
     }
 
     setSaving(true)
+
     try {
-      const body = {
-        title,
-        excerpt,
-        content,
-        mainImage: mainImage || undefined,
-        galleryImages,
-        tags: selectedTags,
-        backgroundColor: backgroundColor || undefined,
-        featured,
-        status: submitStatus,
+      const response = await fetch(
+        postId ? `/api/posts/${postId}` : "/api/posts",
+        {
+          method: postId ? "PATCH" : "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        }
+      )
+
+      const result = await response.json()
+
+      console.log({result})
+
+      if (!result.ok) {
+        toast.error(result.message || "Error al guardar")
+        return
       }
 
-      if (postId) {
-        await fetch(`/api/posts/${postId}`, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-        })
-        toast.success("Publicacion actualizada")
-      } else {
-        await fetch("/api/posts", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-        })
-        toast.success("Publicacion creada")
-      }
+      toast.success(result.message || (postId
+        ? "Publicacion actualizada"
+        : "Publicacion creada"))
+
       router.push("/admin")
       router.refresh()
-    } catch {
-      toast.error("Error al guardar")
+
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Error inesperado al guardar"
+      )
     } finally {
       setSaving(false)
     }
@@ -229,7 +248,7 @@ export function PostForm({ postId }: PostFormProps) {
                 <ImagePlus className="h-4 w-4" />
               </Button>
             </div>
-            {galleryImages.length > 0 && (
+            {galleryImages && galleryImages.length > 0 && (
               <div className="grid grid-cols-3 gap-2 mt-2">
                 {galleryImages.map((img, i) => (
                   <div
