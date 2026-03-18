@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 import { NextResponse } from "next/server"
 import { getAllPosts } from "@/actions/posts"
 import { createPost } from "@/actions/post/createPost"
