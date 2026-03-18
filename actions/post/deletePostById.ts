@@ -1,5 +1,5 @@
-import { deleteDoc, doc, getDoc } from "firebase/firestore"
 "use server"
+import { deleteDoc, doc, getDoc } from "firebase/firestore"
  import { revalidatePath } from "next/cache"
 import { FirebaseDB } from "@/config/firebase"
 import { deleteFilesByUrls } from "@/utils/firebaseStorage"
