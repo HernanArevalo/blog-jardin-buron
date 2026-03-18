@@ -7,9 +7,10 @@ type Params = {
 }
 
 export async function authenticateUser({ email, password }: Params) {
+
   const user = await getUser(email)
 
-  if (!user?.ok || !user.data?.password) {
+  if (!user.ok) {
     return {
       ok: false,
       message: "Credenciales inválidas",
@@ -18,12 +19,12 @@ export async function authenticateUser({ email, password }: Params) {
     }
   }
 
-  const validPassword = await bcrypt.compare(password, user.data.password)
+  const validPassword = await bcrypt.compare(password, user.data!.password)
 
   if (!validPassword) {
     return {
       ok: false,
-      message: "Credenciales inválidas",
+      message: "Contraseña incorrecta",
       data: null,
       status: 401,
     }
