@@ -10,7 +10,16 @@ import type { Post, Tag } from "@/lib/types"
 import { Button } from "@/components/ui/button"
 import { parseFirestoreDate } from "@/utils/parseFirestoreDate"
 
-const fetcher = (url: string) => fetch(url).then((r) => r.json())
+const fetcher = async (url: string) => {
+  const response = await fetch(url)
+
+  if (response.status === 401) {
+    window.location.href = "/login"
+    throw new Error("No autorizado")
+  }
+
+  return response.json()
+}
 
 export default function AdminPage() {
   const { data: posts, mutate } = useSWR<Post[]>("/api/posts", fetcher)

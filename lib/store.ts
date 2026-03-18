@@ -12,7 +12,7 @@ let tagsStore: Tag[] = [...initialTags]
 export function getAllPosts(): Post[] {
   return [...postsStore].sort(
     (a, b) =>
-      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      b.createdAt.toMillis() - a.createdAt.toMillis()
   )
 }
 
@@ -25,7 +25,6 @@ export function getStorePostById(id: string): Post | undefined {
 }
 
 export function createPost(data: Omit<Post, "id" | "createdAt" | "updatedAt">): Post {
-  const now = new Date().toISOString()
   const post: Post = {
     ...data,
     id: String(Date.now()),
@@ -45,7 +44,7 @@ export function updatePost(
   postsStore[index] = {
     ...postsStore[index],
     ...data,
-    updatedAt: new Date().toISOString(),
+    updatedAt: Timestamp.now(),
   }
   return postsStore[index]
 }
