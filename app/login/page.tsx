@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent } from "@/components/ui/card"
 import { ArrowLeft, Lock, Sparkles, Star, Heart, User } from "lucide-react"
 import { FormEvent, useState } from "react"
-import { toast } from "sonner"
+// import { toast } from "sonner"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -38,17 +38,17 @@ export default function LoginPage() {
       const result = await response.json()
 
       if (!response.ok || !result.ok) {
-        toast.error(result.message || "No se pudo iniciar sesión")
+        // toast.error(result.message || "No se pudo iniciar sesión")
         return
       }
 
-      toast.success("Ingreso correcto")
+      // toast.success("Ingreso correcto")
       router.replace(nextPath)
       router.refresh()
     } catch (error) {
-      toast.error(
-        error instanceof Error ? error.message : "Error inesperado al iniciar sesión"
-      )
+      // toast.error(
+        // error instanceof Error ? error.message : "Error inesperado al iniciar sesión"
+      // )
     } finally {
       setLoading(false)
     }
