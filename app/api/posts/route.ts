@@ -2,18 +2,28 @@ import { NextResponse } from "next/server"
 import { getAllPosts } from "@/actions/posts"
 import { createPost } from "@/actions/post/createPost"
 import { CreatePostInput } from "@/lib/types"
-import { generateSlug } from "@/utils/generateSlug"
+import { requireSession } from "@/lib/auth"
 
 export async function GET() {
+  const session = await requireSession()
+
+  if (!session.ok) {
+    return NextResponse.json(session, { status: session.status })
+  }
+
   const posts = await getAllPosts()
 
   return NextResponse.json(posts)
 }
 
 export async function POST(request: Request) {
-  const body = await request.json()
+  const session = await requireSession()
 
-  const slug = body.slug || generateSlug(body.title)
+  if (!session.ok) {
+    return NextResponse.json(session, { status: session.status })
+  }
+
+  const body = await request.json()
 
   const post = await createPost({
     ...body,
@@ -22,5 +32,5 @@ export async function POST(request: Request) {
     status: body.status || "draft",
   } as CreatePostInput)
 
-  return NextResponse.json(post, { status: 201 })
+  return NextResponse.json(post, { status: post.status })
 }

@@ -18,8 +18,14 @@ import { validatePost, validatePostResult } from "@/lib/validators/validatePost"
 
 const fetcher = async (url: string) => {
   const res = await fetch(url)
+
+  if (res.status === 401) {
+    window.location.href = "/login"
+    throw new Error("No autorizado")
+  }
+
   const json = await res.json()
-  return json.data
+  return json.data ?? json
 }
 interface PostFormProps {
   postId?: string
@@ -114,7 +120,11 @@ useEffect(() => {
 
       const result = await response.json()
 
-      console.log({result})
+      if (response.status === 401) {
+        router.replace("/login")
+        toast.error("Tu sesión expiró. Volvé a iniciar sesión")
+        return
+      }
 
       if (!result.ok) {
         toast.error(result.message || "Error al guardar")
