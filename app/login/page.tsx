@@ -1,18 +1,19 @@
 "use client"
 
-export const dynamic = "force-dynamic"
-
 import Link from "next/link"
+import { Suspense, type FormEvent, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
+import { ArrowLeft, Heart, Lock, Sparkles, Star, User } from "lucide-react"
+
 import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent } from "@/components/ui/card"
-import { ArrowLeft, Lock, Sparkles, Star, Heart, User } from "lucide-react"
-import { FormEvent, useState } from "react"
 import { toast } from "sonner"
 
-export default function LoginPage() {
+export const dynamic = "force-dynamic"
+
+function LoginForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [email, setEmail] = useState("defaziosilvia@gmail.com")
@@ -54,6 +55,58 @@ export default function LoginPage() {
     }
   }
 
+  return (
+    <form className="space-y-5" onSubmit={handleLogin}>
+      <div className="space-y-2 animate-fade-in-up animation-delay-100">
+        <Label htmlFor="email" className="text-sm font-medium text-foreground">
+          Usuario
+        </Label>
+        <div className="relative">
+          <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Input
+            id="email"
+            type="email"
+            placeholder="Usuario"
+            className="pl-10 h-12 bg-background/50 border-border/60 focus:border-primary focus:ring-primary/20 transition-all"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            autoComplete="username"
+          />
+        </div>
+      </div>
+
+      <div className="space-y-2 animate-fade-in-up animation-delay-200">
+        <Label htmlFor="password" className="text-sm font-medium text-foreground">
+          Contraseña
+        </Label>
+        <div className="relative">
+          <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Input
+            id="password"
+            type="password"
+            placeholder="Tu contraseña"
+            className="pl-10 h-12 bg-background/50 border-border/60 focus:border-primary focus:ring-primary/20 transition-all"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete="current-password"
+          />
+        </div>
+      </div>
+
+      <div className="animate-fade-in-up animation-delay-400 pt-2">
+        <Button
+          type="submit"
+          className="w-full h-12 text-base font-medium bg-linear-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all hover:-translate-y-0.5"
+          disabled={loading}
+        >
+          {loading ? "Ingresando..." : "Iniciar sesión"}
+        </Button>
+      </div>
+    </form>
+  )
+}
+
+export default function LoginPage() {
   return (
     <div className="min-h-screen relative overflow-hidden bg-linear-to-br from-primary/5 via-background to-accent/10">
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -121,53 +174,9 @@ export default function LoginPage() {
               <div className="h-1.5 bg-linear-to-r from-primary via-accent to-[#E05A8D]" />
 
               <CardContent className="p-6 md:p-8">
-                <form className="space-y-5" onSubmit={handleLogin}>
-                  <div className="space-y-2 animate-fade-in-up animation-delay-100">
-                    <Label htmlFor="email" className="text-sm font-medium text-foreground">
-                      Usuario
-                    </Label>
-                    <div className="relative">
-                      <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder="Usuario"
-                        className="pl-10 h-12 bg-background/50 border-border/60 focus:border-primary focus:ring-primary/20 transition-all"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        autoComplete="username"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2 animate-fade-in-up animation-delay-200">
-                    <Label htmlFor="password" className="text-sm font-medium text-foreground">
-                      Contraseña
-                    </Label>
-                    <div className="relative">
-                      <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                      <Input
-                        id="password"
-                        type="password"
-                        placeholder="Tu contraseña"
-                        className="pl-10 h-12 bg-background/50 border-border/60 focus:border-primary focus:ring-primary/20 transition-all"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        autoComplete="current-password"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="animate-fade-in-up animation-delay-400 pt-2">
-                    <Button
-                      type="submit"
-                      className="w-full h-12 text-base font-medium bg-linear-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all hover:-translate-y-0.5"
-                      disabled={loading}
-                    >
-                      {loading ? "Ingresando..." : "Iniciar sesión"}
-                    </Button>
-                  </div>
-                </form>
+                <Suspense fallback={<div className="h-[220px] animate-pulse rounded-xl bg-muted/40" />}>
+                  <LoginForm />
+                </Suspense>
 
                 <div className="relative my-6 animate-fade-in-up animation-delay-500">
                   <div className="absolute inset-0 flex items-center">
