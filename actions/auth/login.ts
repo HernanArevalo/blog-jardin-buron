@@ -23,7 +23,7 @@ export async function loginAction({
   if (!user.ok || !user.data?.email) {
     return {
       ok: false,
-      message: "Credenciales inválidas",
+      message: user.message,
       status: 401,
     }
   }
