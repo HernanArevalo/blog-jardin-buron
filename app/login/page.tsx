@@ -11,6 +11,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { ArrowLeft, Lock, Sparkles, Star, Heart, User } from "lucide-react"
 import { FormEvent, useState } from "react"
 import { toast } from "sonner"
+import Image from "next/image"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -106,8 +107,9 @@ export default function LoginPage() {
         <div className="flex-1 flex items-center justify-center p-4 md:p-6">
           <div className="w-full max-w-md animate-scale-in">
             <div className="text-center mb-8 animate-fade-in-down">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-linear-to-br from-primary to-primary/80 text-primary-foreground mb-4 shadow-lg shadow-primary/25">
-                <span className="font-serif text-2xl font-bold">J</span>
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-linear-to-br from-primary to-primary/40 text-primary-foreground mb-4 shadow-lg shadow-primary/25">
+                  {/* <span>J</span> */}
+                  <Image src={'/logo.png'} alt="logo" width={42} height={42}></Image>
               </div>
               <h1 className="font-serif text-2xl md:text-3xl text-foreground mb-2">
                 Bienvenido
@@ -161,7 +163,7 @@ export default function LoginPage() {
                   <div className="animate-fade-in-up animation-delay-400 pt-2">
                     <Button
                       type="submit"
-                      className="w-full h-12 text-base font-medium bg-linear-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all hover:-translate-y-0.5"
+                      className="cursor-pointer w-full h-12 text-base font-medium bg-linear-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all hover:-translate-y-0.5"
                       disabled={loading}
                     >
                       {loading ? "Ingresando..." : "Iniciar sesión"}
